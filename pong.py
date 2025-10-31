@@ -10,13 +10,14 @@ gravity = 1
 GROUND_Y = screen.get_height()
 
 class Player:
-    def __init__(self, left, top, x, y, padding, color):
-        self.left = left
+    def __init__(self, left, top):
+        x = 100
+        self.left = left - x/2
         self.top = top
-        self.x = x - padding
-        self.y = y - padding
+        self.x = 100
+        self.y = 50
         self.rectangle = (self.left, self.top, self.x, self.y)
-        self.color = color
+        self.color = (255, 255, 255)
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rectangle, 0, 10)
 
@@ -54,7 +55,7 @@ class Ball:
 ball = Ball(screen.get_width()/2, 0)
 court = Court(10, 10, screen.get_width(), screen.get_height(), 20,(255, 255, 255))
 blackcourt = Court(20 , 20, screen.get_width(), screen.get_height(), 40,(0, 0, 0))
-playerone = Player(20 , 20, screen.get_width()/2, 100, 40,(255, 255, 255))
+playerone = Player(screen.get_width()/2, 10)
 
 
 while running:
