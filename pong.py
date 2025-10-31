@@ -7,7 +7,7 @@ clock = pygame.time.Clock()
 running = True
 
 GRAVITY = 0.5
-GROUND_Y = pygame.Surface.get_height(screen)
+GROUND_Y = screen.get_height()
 
 class Court:
     def __init__(self, left, top, x, y, padding, color):
@@ -41,8 +41,8 @@ class Ball:
 
 
 ball = Ball(300, 100)
-court = Court(10, 10, pygame.Surface.get_width(screen), pygame.Surface.get_height(screen), 20,(255, 255, 255))
-blackcourt = Court(20 , 20, pygame.Surface.get_width(screen), pygame.Surface.get_height(screen), 40,(0, 0, 0))
+court = Court(10, 10, screen.get_width(), screen.get_height(), 20,(255, 255, 255))
+blackcourt = Court(20 , 20, screen.get_width(), screen.get_height(), 40,(0, 0, 0))
 
 
 while running:
@@ -53,9 +53,9 @@ while running:
     ball.update()
 
     screen.fill("black")
-    ball.draw(screen)
     court.draw(screen)
     blackcourt.draw(screen)
+    ball.draw(screen)
     pygame.display.flip()
 
     clock.tick(60)
