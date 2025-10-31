@@ -1,36 +1,53 @@
 import pygame
 
-# pygame setup
+# setup
 pygame.init()
 screen = pygame.display.set_mode((600, 1000))
 clock = pygame.time.Clock()
 running = True
 
+GRAVITY = 0.5
+GROUND_Y = 950
+
+class Court:
+    def __init__(self, x, y):
+        self.x = x
+        self.x = y
+        self.rectangle = 0
+
 class Ball:
-    size = 50
-    color = "white"
-    velocity = 1
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.radius = 50
+        self.color = (255, 255, 255)
+        self.vy = 0
 
-def drawnBall():
-    pygame.draw.circle(screen, (255, 255, 255), (pygame.Surface.get_width(screen)/2, pygame.Surface.get_height(screen)/2), Ball.size)
+    def update(self):
+        self.vy += GRAVITY
+        self.y += self.vy
 
+        if self.y + self.radius > GROUND_Y:
+            self.y = GROUND_Y - self.radius
+            self.vy *= -0.7
+
+    def draw(self, screen):
+        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
+
+
+ball = Ball(300, 100)
 
 while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("black")
+    ball.update()
 
-    # RENDER YOUR GAME HERE
-    drawnBall()
-    # flip() the display to put your work on screen
+    screen.fill("black")
+    ball.draw(screen)
     pygame.display.flip()
 
-    clock.tick(60)  # limits FPS to 60
-
+    clock.tick(60)
 
 pygame.quit()
