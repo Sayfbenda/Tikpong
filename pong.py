@@ -6,7 +6,6 @@ screen = pygame.display.set_mode((600, 1000))
 clock = pygame.time.Clock()
 running = True
 
-gravity = 1
 GROUND_Y = screen.get_height()
 
 class Player:
@@ -50,16 +49,16 @@ class Ball:
     def update(self):
         self.y += self.v
 
-        if self.y + self.radius > GROUND_Y:
+        if self.y + self.radius > screen.get_height()-blackcourt.top:
             self.v *= -1
-        if self.y + self.radius < 0:
+        elif self.y + self.radius < 60:
             self.v *= -1
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
 
 
-ball = Ball(screen.get_width()/2, 0)
+ball = Ball(screen.get_width()/2, 100)
 court = Court(10, 10, screen.get_width(), screen.get_height(), 20,(255, 255, 255))
 blackcourt = Court(20 , 20, screen.get_width(), screen.get_height(), 40,(0, 0, 0))
 playerone = Player(screen.get_width()/2, 10, 100, 50)
