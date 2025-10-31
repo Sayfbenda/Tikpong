@@ -58,11 +58,14 @@ class Ball:
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
 
 
-ball = Ball(screen.get_width()/2, 100)
 court = Court(10, 10, screen.get_width(), screen.get_height(), 20,(255, 255, 255))
 blackcourt = Court(20 , 20, screen.get_width(), screen.get_height(), 40,(0, 0, 0))
+
+
 playerone = Player(screen.get_width()/2, 10, 75, 50)
 playertwo = Player(screen.get_width()/2, screen.get_height()-60, 75, 50)
+
+ball = Ball(screen.get_width()/2, 100)
 
 
 while running:
@@ -75,11 +78,18 @@ while running:
     playertwo.update()
 
     screen.fill("black")
+
     court.draw(screen)
     blackcourt.draw(screen)
+
     ball.draw(screen)
+
     playerone.draw(screen)
     playertwo.draw(screen)
+
+    pygame.draw.line(screen, (255, 255, 255), (blackcourt.left, screen.get_height()/2), (screen.get_width()-blackcourt.left, screen.get_height()/2), 10)
+    pygame.draw.circle(screen, (255, 255, 255), (screen.get_width()/2, screen.get_height()/2), 10)
+
     pygame.display.flip()
 
     clock.tick(60)
