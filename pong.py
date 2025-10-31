@@ -10,16 +10,23 @@ gravity = 1
 GROUND_Y = screen.get_height()
 
 class Player:
-    def __init__(self, left, top):
-        x = 100
-        self.left = left - x/2
+    def __init__(self, left, top, x, y):
+        self.x = x
+        self.y = y
+        self.left = left - self.x/2
         self.top = top
-        self.x = 100
-        self.y = 50
-        self.rectangle = (self.left, self.top, self.x, self.y)
         self.color = (255, 255, 255)
+        self.v = 10
+    def update(self):
+        self.left += self.v
+        if self.left > screen.get_width()-self.x:
+            self.v *= -1
+        if self.left < 0:
+            self.v *= -1
+
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rectangle, 0, 10)
+        pygame.draw.rect(screen, self.color, (self.left, self.top, self.x, self.y), 0, 10)
+
 
 class Court:
     def __init__(self, left, top, x, y, padding, color):
@@ -38,15 +45,15 @@ class Ball:
         self.y = y
         self.radius = 20
         self.color = (255, 255, 255)
-        self.vy = 0
+        self.v = 10
 
     def update(self):
-        self.vy += gravity
-        self.y += self.vy
+        self.y += self.v
 
         if self.y + self.radius > GROUND_Y:
-            self.y = GROUND_Y - self.radius
-            self.vy *= -1
+            self.v *= -1
+        if self.y + self.radius < 0:
+            self.v *= -1
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
@@ -55,7 +62,7 @@ class Ball:
 ball = Ball(screen.get_width()/2, 0)
 court = Court(10, 10, screen.get_width(), screen.get_height(), 20,(255, 255, 255))
 blackcourt = Court(20 , 20, screen.get_width(), screen.get_height(), 40,(0, 0, 0))
-playerone = Player(screen.get_width()/2, 10)
+playerone = Player(screen.get_width()/2, 10, 100, 50)
 
 
 while running:
@@ -64,6 +71,7 @@ while running:
             running = False
 
     ball.update()
+    playerone.update()
 
     screen.fill("black")
     court.draw(screen)
