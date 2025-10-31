@@ -18,9 +18,9 @@ class Player:
         self.v = 10
     def update(self):
         self.left += self.v
-        if self.left > screen.get_width()-self.x:
+        if self.left > blackcourt.x-self.x:
             self.v *= -1
-        if self.left < 0:
+        elif self.left < blackcourt.left:
             self.v *= -1
 
     def draw(self, screen):
@@ -61,7 +61,8 @@ class Ball:
 ball = Ball(screen.get_width()/2, 100)
 court = Court(10, 10, screen.get_width(), screen.get_height(), 20,(255, 255, 255))
 blackcourt = Court(20 , 20, screen.get_width(), screen.get_height(), 40,(0, 0, 0))
-playerone = Player(screen.get_width()/2, 10, 100, 50)
+playerone = Player(screen.get_width()/2, 10, 75, 50)
+playertwo = Player(screen.get_width()/2, screen.get_height()-60, 75, 50)
 
 
 while running:
@@ -71,12 +72,14 @@ while running:
 
     ball.update()
     playerone.update()
+    playertwo.update()
 
     screen.fill("black")
     court.draw(screen)
     blackcourt.draw(screen)
     ball.draw(screen)
     playerone.draw(screen)
+    playertwo.draw(screen)
     pygame.display.flip()
 
     clock.tick(60)
