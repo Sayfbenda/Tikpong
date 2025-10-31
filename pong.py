@@ -10,13 +10,13 @@ GRAVITY = 0.5
 GROUND_Y = pygame.Surface.get_height(screen)
 
 class Court:
-    def __init__(self, x, y):
-        self.left = 10
-        self.top = 10
-        self.x = x - 20
-        self.y = y - 20
+    def __init__(self, left, top, x, y, padding, color):
+        self.left = left
+        self.top = top
+        self.x = x - padding
+        self.y = y - padding
         self.rectangle = (self.left, self.top, self.x, self.y)
-        self.color = (255, 255, 255)
+        self.color = color
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rectangle)
 
@@ -41,7 +41,9 @@ class Ball:
 
 
 ball = Ball(300, 100)
-court = Court(pygame.Surface.get_width(screen), pygame.Surface.get_height(screen))
+court = Court(10, 10, pygame.Surface.get_width(screen), pygame.Surface.get_height(screen), 20,(255, 255, 255))
+blackcourt = Court(20 , 20, pygame.Surface.get_width(screen), pygame.Surface.get_height(screen), 40,(0, 0, 0))
+
 
 while running:
     for event in pygame.event.get():
@@ -53,6 +55,7 @@ while running:
     screen.fill("black")
     ball.draw(screen)
     court.draw(screen)
+    blackcourt.draw(screen)
     pygame.display.flip()
 
     clock.tick(60)
