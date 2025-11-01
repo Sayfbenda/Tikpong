@@ -18,11 +18,14 @@ class Player:
         self.v = 8
 
     def update(self):
-        self.left += self.v
-        if self.left > blackcourt.x - self.x:
-            self.v *= -1
+        if self.left+self.x > blackcourt.x:
+            self.left -= self.v
         elif self.left < blackcourt.left:
-            self.v *= -1
+            self.left += self.v
+        elif ball.x < screen.get_width()/2:
+            self.left += self.v
+        elif ball.x > screen.get_width()/2:
+            self.left -= self.v
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, (self.left, self.top, self.x, self.y), 0, 10)
@@ -69,7 +72,7 @@ class Ball:
         player_rect = pygame.Rect(player.left, player.top, player.x, player.y)
 
         if ball_rect.colliderect(player_rect):
-            self.vy *= -1
+            self.vy *= -1.05
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
